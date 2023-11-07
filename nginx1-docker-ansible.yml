@@ -1,0 +1,25 @@
+---
+- name: Deploy Nginx Docker Container
+  hosts: nginx_servers
+  become: true
+
+  tasks:
+    - name: Create Docker Network
+      docker_network:
+        name: sabs_network
+
+    - name: Pull Nginx Docker image
+      docker_image:
+        name: nginx:latest
+        source: pull
+
+    - name: Run Nginx Docker container
+      docker_container:
+        name: server2
+        image: nginx:latest
+        ports:
+          - "8091:80"
+        networks:
+          - name: sabs_network
+        volumes:
+          - /var/www/html/crud/default1.conf:/etc/nginx/conf.d/default.conf

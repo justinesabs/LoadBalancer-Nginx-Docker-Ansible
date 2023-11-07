@@ -1,0 +1,11 @@
+[local]
+localhost ansible_connection=local
+
+[nginx_servers]
+localhost ansible_connection=local
+
+[mysql_servers]
+localhost ansible_connection=local
+
+[php-fpm_servers]
+localhost ansible_connection=local

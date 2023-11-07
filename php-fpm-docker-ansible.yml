@@ -1,0 +1,21 @@
+---
+- name: Deploy PHP-fpm docker container
+  hosts: php-fpm_servers
+  become: true
+
+  tasks:
+    - name: Pull PHP-fpm docker image
+      docker_image:
+        name: zhy7ne/8.1-fpm-alpine-z:2.0
+        source: pull
+
+    - name: Run PHP-fpm docker image
+      docker_container:
+        name: php-fpm1
+        image: zhy7ne/8.1-fpm-alpine-z:2.0
+        ports:
+          - "9001:9000"
+        networks:
+          - name: sabs_network
+        volumes:
+          - /var/www/html/crud/index.php:/var/www/html/index.php

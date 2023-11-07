@@ -1,0 +1,26 @@
+---
+- name: Deploy Mysql Docker Container
+  hosts: mysql_servers
+  become: true
+
+  tasks:
+    - name: Pull Mysql Docker image
+      docker_image:
+        name: mysql:latest
+        source: pull
+
+    - name: Run Mysql Docker container
+      docker_container:
+        name: dbserver1
+        image: mysql:latest
+        state: started
+        restart_policy: always
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: mydatabase
+          MYSQL_USER: justine
+          MYSQL_PASSWORD: password
+        ports:
+          - "33061:3306"
+        networks:
+          - name: sabs_network
